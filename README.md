@@ -1,30 +1,26 @@
-## Docker Image Repositories
+## Docker Files and Dependencies
 
 Repository Included
 
-### Images
+### Docker Files For
 
-1. Apache Image
-2. Nginx Image
+1. Apache
+2. Nginx
 3. PHP-FPM
 4. MySQL
 5. Workspace
 
-### Files/Folders
-
-1. .env-source file
-
-      i. Copy file to new site <br/>
-     ii. Rename this to .env <br/>
-    iii. Edit environment variables, as per site requirement to include or exclude libs
-        
-2. Copy conf folder in site conf folder,under specific service 
-
-
-3. docker-compose-source.yml
-
-     i. Copy file to new site<br/>
-   iii. Use docker-compose to build image/containers e.g.
+### How to use for project
+1. Create an empty directory say it <R> on you machine
+2. Clone this repo in newly created directory
+3. Create code <C> & data <D> sub directories
+4. Copy all you application code to newly created code sub directory
+5. Set html root to match path in code sub directory, in the file /dock.d/conf.d/apache/sites/apache.conf 
+6. Copy /dock.d/source.env in the <R> directory and rename to .env
+7. Updates any path in .env file if needed
+8. Search and update proj.name to your project name, in dock.d directory
+9. Copy /dock.d/docker-compose.yaml in the <R> directory
+10. Adjust docker-compose.yaml service as per your requirements
 
 
 ### Useful Commands
@@ -33,7 +29,7 @@ Docker compose useful commands
    
 To build/start all services
 ```bash
-docker-compose up apache php-fpm mysql
+docker-compose up
 ```
   
 To build/start first time
