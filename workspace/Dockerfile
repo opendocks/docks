@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM smurtazakazmi/base-ws:${PHP_VERSION}
+FROM opendocks/base-ws:${PHP_VERSION}
 
 ARG PHP_VERSION
 ENV PHP_VERSION ${PHP_VERSION}
