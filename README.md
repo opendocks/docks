@@ -1,8 +1,8 @@
-## Docker Files and Dependencies
+## OpenDocks Source
 
 Repository Included
 
-### Docker Files For
+### Image Files For
 
 1. Apache
 2. Nginx

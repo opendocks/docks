@@ -1,5 +1,5 @@
-ARG PHP_VERSION
-FROM opendocks/base-ws:${PHP_VERSION}
+ARG BASE_TAG
+FROM opendocks/base-ws:${BASE_TAG}
 
 ARG PHP_VERSION
 ENV PHP_VERSION ${PHP_VERSION}
@@ -31,11 +31,21 @@ RUN apt-get update
 
 # Composer: Install composer and add its bin to the PATH.
 #--------------------------------------------------------------------------
-RUN curl -s http://getcomposer.org/installer | php && \
-    echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
-    mv composer.phar /usr/local/bin/composer
-# Source the bash
-RUN . ~/.bashrc
+# Composer: Install composer and add its bin to the PATH.
+#--------------------------------------------------------------------------
+ARG INSTALL_COMPOSER=false
+ENV INSTALL_COMPOSER ${INSTALL_COMPOSER}
+
+RUN if [ ${INSTALL_COMPOSER} = true ]; then \
+
+    curl -s http://getcomposer.org/installer | php && \
+        echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
+        mv composer.phar /usr/local/bin/composer && \
+
+    # Source the bash
+     . ~/.bashrc \
+;fi
+
 
 
 # Mcrypt: Check need to install mcryp,
@@ -45,9 +55,9 @@ ARG INSTALL_MCRYPT=false
 ENV INSTALL_MCRYPT ${INSTALL_MCRYPT}
 
 RUN if [ ${INSTALL_MCRYPT} = true ]; then \
-    RUN apt-get install -y --allow-downgrades --allow-remove-essential \
-            --allow-change-held-packages \
-            php${PHP_VERSION}-mcrypt \
+    apt-get install -y --allow-downgrades --allow-remove-essential \
+        --allow-change-held-packages \
+        php${PHP_VERSION}-mcrypt \
 ;fi
 
 
