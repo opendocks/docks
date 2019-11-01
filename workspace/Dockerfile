@@ -31,19 +31,14 @@ RUN apt-get update
 
 # Composer: Install composer and add its bin to the PATH.
 #--------------------------------------------------------------------------
-# Composer: Install composer and add its bin to the PATH.
-#--------------------------------------------------------------------------
 ARG INSTALL_COMPOSER=false
 ENV INSTALL_COMPOSER ${INSTALL_COMPOSER}
 
 RUN if [ ${INSTALL_COMPOSER} = true ]; then \
-
     curl -s http://getcomposer.org/installer | php && \
-        echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
-        mv composer.phar /usr/local/bin/composer && \
-
-    # Source the bash
-     . ~/.bashrc \
+    echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
+    mv composer.phar /usr/local/bin/composer && \
+    . ~/.bashrc \
 ;fi
 
 
@@ -55,9 +50,9 @@ ARG INSTALL_MCRYPT=false
 ENV INSTALL_MCRYPT ${INSTALL_MCRYPT}
 
 RUN if [ ${INSTALL_MCRYPT} = true ]; then \
-    apt-get install -y --allow-downgrades --allow-remove-essential \
-        --allow-change-held-packages \
-        php${PHP_VERSION}-mcrypt \
+    RUN apt-get install -y --allow-downgrades --allow-remove-essential \
+            --allow-change-held-packages \
+            php${PHP_VERSION}-mcrypt \
 ;fi
 
 
@@ -515,13 +510,17 @@ ENV NVM_DIR /home/usr-ws/.nvm
 RUN if [ ${INSTALL_NODE} = true ]; then \
     # Install nvm (A Node Version Manager)
     mkdir -p $NVM_DIR && \
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh | bash \
         && . $NVM_DIR/nvm.sh \
         && nvm install ${NODE_VERSION} \
         && nvm use ${NODE_VERSION} \
         && nvm alias ${NODE_VERSION} \
         && if [ ${NPM_REGISTRY} ]; then \
         npm config set registry ${NPM_REGISTRY} \
+        ;fi \
+        && if [ ${INSTALL_NPM_CHECK_UPDATE} = true ]; then \
+        npm install -g npm-check-updates \
+        && npm config set bin-links false \
         ;fi \
         && if [ ${INSTALL_NPM_GULP} = true ]; then \
         npm install -g gulp \
@@ -959,7 +958,7 @@ RUN if [ ${INSTALL_FFMPEG} = true ]; then \
 # Check PHP version:
 #---------------------------------------------------------------------------
 
-RUN set -xe; php -v | head -n 1 | grep -q "PHP ${PHP_VERSION}."
+# RUN set -xe; php -v | head -n 1 | grep -q "PHP ${PHP_VERSION}."
 
 
 
