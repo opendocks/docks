@@ -440,6 +440,20 @@ RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
     docker-php-ext-enable imagick \
 ;fi
 
+
+###########################################################################
+# ZipExtension:
+###########################################################################
+
+USER root
+
+ARG INSTALL_ZIP=false
+
+RUN if [ ${INSTALL_ZIP} = true ]; then \
+    apt-get install libzip-dev -y && \
+    pecl install zip \
+;fi
+
 ###########################################################################
 # IMAP:
 ###########################################################################
