@@ -222,6 +222,19 @@ RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
     apt-get install -y libmagickwand-dev imagemagick \
 ;fi
 
+###########################################################################
+# Nodemon:
+###########################################################################
+
+USER usr-nd
+
+ARG INSTALL_NODEMON=false
+
+RUN if [ ${INSTALL_NODEMON} = true ]; then \
+    npm install -g nodemon \
+;fi
+
+
 #
 #--------------------------------------------------------------------------
 # Final Touch
