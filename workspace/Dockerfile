@@ -15,7 +15,7 @@ ENV TERM xterm
 RUN DEBIAN_FRONTEND=${DEBIAN_FRONTEND} \
     && locale-gen ${LANGUAGE}
 
-RUN apt-get update
+RUN apt-get update --fix-missing
 
 #
 #--------------------------------------------------------------------------
