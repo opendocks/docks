@@ -18,5 +18,5 @@ Repository Included
 4. MySQL
 
 ### How to use for project
-- Please see usage on [opendocks/o-template](https://github.com/opendocks/o-template/blob/master/README.md) 
+- Please see usage on [opendocks/template](https://github.com/opendocks/template/blob/master/README.md) 
 
